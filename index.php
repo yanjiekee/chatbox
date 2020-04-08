@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
     include("config.php");
+    session_start();
 
     function testInput($data) {
         $data = trim($data);
@@ -13,16 +14,29 @@
     $errorMessage = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST["username"])) {
-            $errorMessage = "Invalid username or password";
-        } else {
-            $username = testInput($_POST["username"]);
-        }
 
-        if (empty($_POST["password"])) {
-            $errorMessage = "Invalid username or password";
+        $myusername = mysqli_real_escape_string($conn, $_POST['username']);
+        $query = "SELECT salt FROM user WHERE username = '$myusername'";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $salt = $row['salt'];
+
+        $mypassword = sha1($_POST['password'].$salt);
+
+        $query = "SELECT id FROM user WHERE username = '$myusername' AND hashedpassword = '$mypassword'";
+        $result = mysqli_query($conn, $query);
+        // $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        // $active = $row['active'];
+
+        $count = mysqli_num_rows($result);
+        // If result matched $myusername and $mypassword, table row must be 1 row
+        if($count == 1) {
+            //session_register("myusername");
+            $_SESSION['login_user'] = $myusername;
+
+            header("location: welcome.php");
         } else {
-            $password = testInput($_POST["password"]);
+            $errorMessage = "Your Login Name or Password is invalid";
         }
     }
 ?>
@@ -33,8 +47,7 @@
     <meta charset='UTF-8'>
     <link rel='icon' href='chatboxfavicon.ico' type='image/x-icon'/ >
     <link rel='stylesheet' href='styles.css'>
-    <script src='generalfunctions.js'></script>
-    <script src='digitalclock.js'></script>
+    <script src='homepage.js'></script>
 </head>
 
 <body onload = "startTime(); dayOfTheWeek();">

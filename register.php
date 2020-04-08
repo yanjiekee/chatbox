@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
     include("config.php");
+    session_start();
     define("SECRETCODE", "youaremysunshine");
 
     function testInput($data) {
@@ -66,7 +67,7 @@
     <meta charset="UTF-8">
     <link rel='icon' href='chatboxfavicon.ico' type='image/x-icon'/ >
     <link rel='stylesheet' href='styles.css'>
-    <script src = 'generalfunctions.js'></script>
+    <script src = 'showpassword.js'></script>
 </head>
 
 <body>
