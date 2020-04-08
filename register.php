@@ -66,7 +66,7 @@
     <meta charset="UTF-8">
     <link rel='icon' href='chatboxfavicon.ico' type='image/x-icon'/ >
     <link rel='stylesheet' href='styles.css'>
-    <script src = 'functions.js'></script>
+    <script src = 'generalfunctions.js'></script>
 </head>
 
 <body>

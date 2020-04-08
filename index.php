@@ -33,11 +33,14 @@
     <meta charset='UTF-8'>
     <link rel='icon' href='chatboxfavicon.ico' type='image/x-icon'/ >
     <link rel='stylesheet' href='styles.css'>
+    <script src='generalfunctions.js'></script>
+    <script src='digitalclock.js'></script>
 </head>
 
-<body>
-    <?php echo "<h1>How is your ".date("l")."?</h1>"; ?>
-    <p>Take a step back and think for a bit.. Happy chatting!</p></br>
+<body onload = "startTime(); dayOfTheWeek();">
+    <h1>How was your <span id="whatday"></span>?</h1>
+    <p>Take a step back and think for a bit.. Happy chatting!</p>
+    <p>It's currently <span id="digitalclock"></span>.</p>
 
     <div class="form">
         <form method="post" action="" autocomplete="off">
